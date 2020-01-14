@@ -13,14 +13,12 @@ const detailModalStyle = {
 
 class DetailPage extends Component {
 	handleDelete = async () => {
-		await this.props.deletePost({
-			variables: { id: this.props.Post.id },
-		});
+		// TODO
 		this.props.history.replace('/');
 	};
 
 	render() {
-		const { Post } = this.props;
+		const { instapost } = this.props;
 
 		return (
 			<Modal
@@ -46,14 +44,14 @@ class DetailPage extends Component {
 					<div
 						className="image"
 						style={{
-							backgroundImage: `url(${Post.imageUrl})`,
+							backgroundImage: `url(${instapost.imageUrl})`,
 							backgroundSize: 'cover',
 							backgroundPosition: 'center',
 							paddingBottom: '100%',
 						}}
 					/>
 					<div className="flex items-center black-80 fw3 description">
-						{Post.description}
+						{instapost.description}
 					</div>
 				</div>
 			</Modal>

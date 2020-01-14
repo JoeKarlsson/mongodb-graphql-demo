@@ -15,8 +15,6 @@ class ListPage extends React.Component {
 			blurClass = ' blur';
 		}
 
-		console.log(this.props);
-
 		return (
 			<div className={'w-100 flex justify-center pa6' + blurClass}>
 				<div className="w-100 flex flex-wrap" style={{ maxWidth: 1150 }}>

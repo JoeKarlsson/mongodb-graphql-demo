@@ -1,27 +1,62 @@
+// import React from 'react';
+// import { Query, Mutation } from 'react-apollo';
+// import { DELETE_POST_MUTATION, POST_QUERY } from './graphql';
+// import DetailPage from './DetailPage';
+// import Loading from './Loading';
+
+// const DetailPageContainer = props => {
+// 	const id = props.match.params.id;
+// 	return (
+// 		<Query query={POST_QUERY} variables={{ id }}>
+// 			{({ loading, error, data }) => {
+// 				if (loading) return <Loading />;
+// 				if (error) return <p>`Error! ${error.message}`</p>;
+
+// 				return (
+// 					<Mutation mutation={DELETE_POST_MUTATION}>
+// 						{deletePost => (
+// 							<DetailPage {...data} {...props} deletePost={deletePost} />
+// 						)}
+// 					</Mutation>
+// 				);
+// 			}}
+// 		</Query>
+// 	);
+// };
+
+// export default DetailPageContainer;
+
 import React from 'react';
-import { Query, Mutation } from 'react-apollo';
-import { DELETE_POST_MUTATION, POST_QUERY } from './graphql';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import DetailPage from './DetailPage';
 import Loading from './Loading';
 
-const DetailPageContainer = props => {
-	const id = props.match.params.id;
-	return (
-		<Query query={POST_QUERY} variables={{ id }}>
-			{({ loading, error, data }) => {
-				if (loading) return <Loading />;
-				if (error) return <p>`Error! ${error.message}`</p>;
+function DetailPageContainer(props) {
+	const _id = props.match.params._id;
 
-				return (
-					<Mutation mutation={DELETE_POST_MUTATION}>
-						{deletePost => (
-							<DetailPage {...data} {...props} deletePost={deletePost} />
-						)}
-					</Mutation>
-				);
-			}}
-		</Query>
+	const { loading, error, data } = useQuery(
+		gql`
+			query PostsQuery {
+				instapost {
+					_id
+					imageUrl
+					description
+				}
+			}
+		`,
+		{
+			variables: { _id },
+		}
 	);
-};
+
+	return (
+		<div className="App">
+			{loading && <Loading />}
+			{error && <div>{`encountered an error: ${error}`}</div>}
+			{data && <DetailPage {...data} {...props} />}
+		</div>
+	);
+}
 
 export default DetailPageContainer;
