@@ -11,9 +11,7 @@ class CreatePage extends Component {
 
 	handlePost = async () => {
 		const { description, imageUrl } = this.state;
-		await this.props.createPost({
-			variables: { description, imageUrl },
-		});
+		// TODO
 		this.props.history.replace('/');
 	};
 
