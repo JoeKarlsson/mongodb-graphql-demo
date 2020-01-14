@@ -13,7 +13,7 @@ const detailModalStyle = {
 
 class DetailPage extends Component {
 	handleDelete = async () => {
-		// TODO
+		// TODO - Add Stitch function
 		this.props.history.replace('/');
 	};
 
