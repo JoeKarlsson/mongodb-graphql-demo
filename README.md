@@ -1,68 +1,119 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# GraphQL, React & Apollo Demo
 
-## Available Scripts
+- [GraphQl Slides](https://slides.com/joekarlsson/graphql): Slides from the lecture
+- [React](https://facebook.github.io/react/): Frontend framework for building user interfaces
+- [Apollo Client](https://github.com/apollographql/apollo-client): Fully-featured, production ready caching GraphQL client
+- [Graphcool](https://www.graph.cool): Backend development framework based on GraphQL + Serverless
+- [GraphQl Slides](https://speakerdeck.com/joekarlsson/building-a-graphql-client-in-javascript): Slides that accompany this demo
 
-In the project directory, you can run:
+## Example
 
-### `npm start`
+![graphql-demo](https://user-images.githubusercontent.com/4650739/46759321-bcd37180-cc94-11e8-974e-b8d464a39b67.gif)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Quickstart
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### 1. Clone example repository
 
-### `npm test`
+```sh
+git clone https://github.com/JoeKarlsson/graphql-apollo-demo.git
+cd graphql-apollo-demo
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Create Graphcool service with the [Graphcool CLI](https://docs-next.graph.cool/reference/graphcool-cli/overview-zboghez5go)
 
-### `npm run build`
+```sh
+# Install Graphcool Framework CLI
+npm install -g graphcool
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Create a new service inside a directory called `server`
+graphcool init server
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+This created the following file structure in the current directory:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+.
+└── server
+    ├── graphcool.yml
+    ├── types.graphql
+    └── src
+        ├── hello.graphql
+        └── hello.js
+```
 
-### `npm run eject`
+### 3. Define data model
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Next, you need to define your data model inside the newly created `types.graphql`-file.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Replace the current contents in `types.graphql` with the following type definition (you can delete the predefined `User` type):
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```graphql
+type Post @model {
+	# Required system field
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	# Optional system fields (remove if not needed)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	description: String!
+	imageUrl: String!
+}
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 4. Deploy the GraphQL server
 
-## Learn More
+You're now ready to put your Graphcool service into production! Navigate into the `server` directory and [deploy](https://docs-next.graph.cool/reference/graphcool-cli/commands-aiteerae6l#graphcool-deploy) the service:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sh
+cd server
+graphcool deploy
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+When prompted which cluster you want to deploy to, choose any of the **Shared Clusters** options (`shared-eu-west-1`, `shared-ap-northeast-1` or `shared-us-west-2`).
 
-### Code Splitting
+Save the HTTP endpoint for the `Simple API` from the output, you'll need it in the next step.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+> **Note**: You can now test your GraphQL API inside a GraphQL playground. Simply type the `graphcool playground` command and start sending queries and mutations.
 
-### Analyzing the Bundle Size
+### 5. Connect the frontend app with your GraphQL API
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Paste the `Simple API` endpoint from the previous step to `./src/index.js` as the `uri` argument in the `HttpLink` constructor call:
 
-### Making a Progressive Web App
+```js
+// replace `__SIMPLE_API_ENDPOINT__` with the endpoint from the previous step
+const httpLink = new HttpLink({ uri: '__SIMPLE_API_ENDPOINT__' })
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+> **Note**: If you ever lose your endpoint, you can get access to it again with the `graphcool info` command.
 
-### Advanced Configuration
+### 6. Install dependencies & run locally
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+```sh
+cd ..
+npm install
+npm start # open http://localhost:3000 in your browser
+```
 
-### Deployment
+## Next steps
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+- [Documentation](https://www.graph.cool/docs)
+- [Advanced GraphQL features](https://www.graph.cool/docs/tutorials/advanced-features-eath7duf7d/)
+- [Implementing business logic with serverless functions](https://www.graph.cool/docs/reference/functions/overview-boo6uteemo/)
 
-### `npm run build` fails to minify
+### Maintainers
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <img width="150 height="150"
+        src="https://avatars.githubusercontent.com/JoeKarlsson?v=3">
+        <br />
+        <a href="https://github.com/JoeKarlsson">Joe Karlsson</a>
+      </td>
+    <tr>
+  <tbody>
+</table>
+
+### License
+
+#### [MIT](./LICENSE)
