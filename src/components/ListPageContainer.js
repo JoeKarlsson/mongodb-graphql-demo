@@ -1,20 +1,27 @@
 import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import ListPage from './ListPage';
-import { Query } from 'react-apollo';
-import { ALL_POSTS_QUERY } from './graphql';
 import Loading from './Loading';
 
-console.log(Query);
+function ListPageContainer(props) {
+	const { loading, error, data } = useQuery(gql`
+		query AllPostsQuery {
+			instaposts {
+				_id
+				imageUrl
+				description
+			}
+		}
+	`);
 
-const ListPageContainer = props => (
-	<Query query={ALL_POSTS_QUERY} pollInterval={500}>
-		{({ loading, error, data }) => {
-			if (loading) return <Loading />;
-			if (error) return `Error! ${error.message}`;
-
-			return <ListPage {...data} {...props} />;
-		}}
-	</Query>
-);
+	return (
+		<div className="App">
+			{loading && <Loading />}
+			{error && <div>{`encountered an error: ${error}`}</div>}
+			{data && <ListPage {...data} {...props} />}
+		</div>
+	);
+}
 
 export default ListPageContainer;

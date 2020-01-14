@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { HashRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { HttpLink, InMemoryCache, ApolloClient } from 'apollo-boost';
 import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from '@apollo/react-hooks';
 import * as serviceWorker from './serviceWorker';
-// import ListPage from './components/ListPageContainer';
+import ListPage from './components/ListPageContainer';
 // import CreatePage from './components/CreatePageContainer';
 // import DetailPage from './components/DetailPageContainer';
-import App from './App';
 import 'tachyons';
 import './index.css';
 
@@ -37,7 +36,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
 	<ApolloProvider client={client}>
-		<App />
+		<Router>
+			<div>
+				<Route exact path="/" component={ListPage} />
+			</div>
+		</Router>
 	</ApolloProvider>,
 	document.getElementById('root')
 );
