@@ -1,103 +1,110 @@
 # GraphQL, React & Apollo Demo
 
-- [GraphQl Slides](https://slides.com/joekarlsson/graphql): Slides from the lecture
+- [GraphQl Slides](https://speakerdeck.com/joekarlsson/building-a-graphql-client-in-javascript): Slides that accompany this demo
+- [Access MongoDB Data with GraphQL [Docs] ](#): The Stitch GraphQL API allows client applications to access data in a linked MongoDB cluster using any standard GraphQL client.
+- [GraphQL](https://graphql.org/): A query language for your API
 - [React](https://facebook.github.io/react/): Frontend framework for building user interfaces
 - [Apollo Client](https://github.com/apollographql/apollo-client): Fully-featured, production ready caching GraphQL client
-- [Graphcool](https://www.graph.cool): Backend development framework based on GraphQL + Serverless
-- [GraphQl Slides](https://speakerdeck.com/joekarlsson/building-a-graphql-client-in-javascript): Slides that accompany this demo
 
 ## Example
 
 ![graphql-demo](https://user-images.githubusercontent.com/4650739/46759321-bcd37180-cc94-11e8-974e-b8d464a39b67.gif)
+
+## Prerequisites
+
+Before you begin, you will need a MongoDB Atlas account. You can learn more about creating an Atlas account in the [Atlas Getting Started](https://docs.atlas.mongodb.com/getting-started/) documentation.
+
+Sign up [here](https://cloud.mongodb.com) and apply code JOEKATLAS200 on the billing page. For help: check out my post on redeemin your FREE Atlas credits:
+
+[How To Activate Your MongoDB Atlas Credits](https://www.joekarlsson.com/2019/12/how-to-activate-your-mongodb-atlas-credits/)
 
 ## Quickstart
 
 ### 1. Clone example repository
 
 ```sh
-git clone https://github.com/JoeKarlsson/graphql-apollo-demo.git
-cd graphql-apollo-demo
+git clone https://github.com/JoeKarlsson/mongodb-graphql-demo.git
+cd mongodb-graphql-demo
 ```
 
-### 2. Create Graphcool service with the [Graphcool CLI](https://docs-next.graph.cool/reference/graphcool-cli/overview-zboghez5go)
+### 2. Log on to Atlas
+
+To use MongoDB Stitch, you must be logged into [Atlas](https://cloud.mongodb.com).
+
+### 3. Create an Atlas Cluster
+
+1. In the left navigation pane, click Clusters, and then click the Build New Cluster button. The Create New Cluster page opens.
+2. Choose your preferred provider and region, tier, and additional settings. As you build your cluster, Atlas displays the associated costs at the bottom of the page.
+3. The default cluster name is Cluster0. If you wish to change the name, do so now, as cluster names cannot be changed once configured.
+4. Click the Create Cluster button to save your changes.
+
+### 4. Add a Stitch App
+
+1. In Atlas, click Stitch Apps in the left-hand navigation.
+2. Click the Create New Application.
+3. In the Create a new application dialog, enter an Application Name for your Stitch app.
+4. Select a cluster in your project in your project from the Link to Cluster dropdown. Stitch will automatically create a MongoDB service that is linked to this cluster.
+5. Enter a name for the service that Stitch will create in the Stitch Service Name field.
+6. Select a deployment model and deployment region for your application.
+7. Click Create.
+
+![create-new-app-modal](https://user-images.githubusercontent.com/4650739/72307115-e3721c00-363e-11ea-8638-76098cd01808.png)
+
+Upon creation of your app, you will be redirected to the MongoDB Stitch console. Your app is created with a MongoDB service named mongodb-atlas.
+
+### 5. Expose Data in a Collection
+
+To access data in a MongoDB collection through the GraphQL API, you must [create or generate a schema](https://docs-mongodbcom-staging.corp.mongodb.com/stitch/nick/graphql/mongodb/enforce-a-document-schema.html) for the collection. Stitch uses the collection schema to automatically generate GraphQL types and regenerates types whenever the schema changes.
+
+### 6. Get a Client API Access Token
+
+Stitch enforces collection rules for GraphQL requests, so you must include an authenticated Stitch user access token with each request. To get an access token, you need to authenticate with the Stitch Client HTTP API using the user’s login credentials.
+
+The following authentication request sends the user’s username and password to the client authentication endpoint.
 
 ```sh
-# Install Graphcool Framework CLI
-npm install -g graphcool
+curl --location --request POST 'https://stitch.mongodb.com/api/client/v2.0/app/<yourappid-abcde>/auth/providers/local-userpass/login' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
 
-# Create a new service inside a directory called `server`
-graphcool init server
+    "username": "test@example.com",
+
+    "password": "password"
+
+  }'
 ```
 
-This created the following file structure in the current directory:
-
-```
-.
-└── server
-    ├── graphcool.yml
-    ├── types.graphql
-    └── src
-        ├── hello.graphql
-        └── hello.js
-```
-
-### 3. Define data model
-
-Next, you need to define your data model inside the newly created `types.graphql`-file.
-
-Replace the current contents in `types.graphql` with the following type definition (you can delete the predefined `User` type):
-
-```graphql
-type Post @model {
-	# Required system field
-	id: ID! @isUnique # read-only (managed by Graphcool)
-	# Optional system fields (remove if not needed)
-	createdAt: DateTime! # read-only (managed by Graphcool)
-	updatedAt: DateTime! # read-only (managed by Graphcool)
-	description: String!
-	imageUrl: String!
-}
-```
-
-### 4. Deploy the GraphQL server
-
-You're now ready to put your Graphcool service into production! Navigate into the `server` directory and [deploy](https://docs-next.graph.cool/reference/graphcool-cli/commands-aiteerae6l#graphcool-deploy) the service:
-
-```sh
-cd server
-graphcool deploy
-```
-
-When prompted which cluster you want to deploy to, choose any of the **Shared Clusters** options (`shared-eu-west-1`, `shared-ap-northeast-1` or `shared-us-west-2`).
-
-Save the HTTP endpoint for the `Simple API` from the output, you'll need it in the next step.
-
-> **Note**: You can now test your GraphQL API inside a GraphQL playground. Simply type the `graphcool playground` command and start sending queries and mutations.
+If authentication was successful, the response body includes an access_token value. You’ll need to use this token in your
+GraphQL requests.
 
 ### 5. Connect the frontend app with your GraphQL API
 
-Paste the `Simple API` endpoint from the previous step to `./src/index.js` as the `uri` argument in the `HttpLink` constructor call:
+Change `src/congig_example.js` to `src/config.js` and
 
-```js
-// replace `__SIMPLE_API_ENDPOINT__` with the endpoint from the previous step
-const httpLink = new HttpLink({ uri: '__SIMPLE_API_ENDPOINT__' })
-```
-
-> **Note**: If you ever lose your endpoint, you can get access to it again with the `graphcool info` command.
+Paste the `ACCESS_TOKEN` you got from the previous step into the config file along with your Stitch APP_ID.
 
 ### 6. Install dependencies & run locally
 
 ```sh
-cd ..
 npm install
 npm start # open http://localhost:3000 in your browser
 ```
 
 ## Next steps
 
-- [Documentation](https://www.graph.cool/docs)
-- [Advanced GraphQL features](https://www.graph.cool/docs/tutorials/advanced-features-eath7duf7d/)
-- [Implementing business logic with serverless functions](https://www.graph.cool/docs/reference/functions/overview-boo6uteemo/)
+- [Documentation](#)
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://github.com/JoeKarlsson/iot-kitty-litter-box/blob/develop/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+### Contributing TLDR;
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
 
 ### Maintainers
 
@@ -116,4 +123,4 @@ npm start # open http://localhost:3000 in your browser
 
 ### License
 
-#### [MIT](./LICENSE)
+#### [Apache 2.0](./LICENSE)
