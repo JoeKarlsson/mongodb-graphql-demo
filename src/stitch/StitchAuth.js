@@ -5,7 +5,7 @@ import {
 	loginAnonymous,
 	logoutCurrentUser,
 	getCurrentUser,
-} from '../stitch/authentication';
+} from './authentication';
 
 // Create a React Context that lets us expose and access auth state
 // without passing props through many levels of the component tree
@@ -30,23 +30,18 @@ export function StitchAuthProvider(props) {
 
 	// Authentication Actions
 	const handleAnonymousLogin = async () => {
-        const { isLoggedIn } = authState;
-        console.log(isLoggedIn)
-        
+		const { isLoggedIn } = authState;
 		if (!isLoggedIn) {
-            console.log(isLoggedIn)
-            try {
-                const loggedInUser = await loginAnonymous();
-                console.log(loggedInUser)
-                setAuthState({
-                    ...authState,
-                    isLoggedIn: true,
-                    currentUser: loggedInUser,
-                });
-                console.log(authState)
-            } catch (err) {
-                console.error(err);
-            }
+			try {
+				const loggedInUser = await loginAnonymous();
+				return setAuthState({
+					...authState,
+					isLoggedIn: true,
+					currentUser: loggedInUser,
+				});
+			} catch (err) {
+				console.error(err);
+			}
 		}
 	};
 	const handleLogout = async () => {

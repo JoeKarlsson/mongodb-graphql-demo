@@ -1,11 +1,10 @@
-import { app } from "./app";
-import { items } from "./mongodb";
+import { app } from './app';
 import {
-  loginAnonymous,
-  logoutCurrentUser,
-  hasLoggedInUser,
-  getCurrentUser,
-} from "./authentication";
+	loginAnonymous,
+	logoutCurrentUser,
+	hasLoggedInUser,
+	getCurrentUser,
+} from './authentication';
 
-export { app, items };
+export { app };
 export { loginAnonymous, logoutCurrentUser, hasLoggedInUser, getCurrentUser };

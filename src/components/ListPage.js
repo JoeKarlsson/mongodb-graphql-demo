@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Post from './Post';
-import { useStitchAuth } from './StitchAuth';
+import { useStitchAuth } from '../stitch/StitchAuth';
 
 
 const ListPage = (props) => {
@@ -21,16 +21,17 @@ const ListPage = (props) => {
 			<div className="w-100 flex flex-wrap" style={{ maxWidth: 1150 }}>
 
 				
-
-				<button className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline" onClick={handleAnonymousLogin} >
-					<img
-						src={require('../assets/plus.svg')}
-						alt=""
-						className="plus mb3"
-					/>
-					<div>Log In as a Guest User</div>
-				</button>
-
+				{ !isLoggedIn &&
+					<button className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline" onClick={handleAnonymousLogin} >
+						<img
+							src={require('../assets/plus.svg')}
+							alt=""
+							className="plus mb3"
+						/>
+						<div>Log In as a Guest User</div>
+					</button>
+				}
+				
 				<Link
 					to="/create"
 					className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline"
@@ -59,7 +60,7 @@ const ListPage = (props) => {
 							alt=""
 							className="plus mb3"
 						/>
-						<div>Log In as a Guest User</div>
+						<div>Log Out</div>
 					</button>
 				}
 			</div>
