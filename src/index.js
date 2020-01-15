@@ -8,9 +8,10 @@ import * as serviceWorker from './serviceWorker';
 import ListPage from './components/ListPageContainer';
 import CreatePage from './components/CreatePageContainer';
 import DetailPage from './components/DetailPageContainer';
+import { StitchAuthProvider, useStitchAuth } from "./components/StitchAuth";
+import CONFIG from './config.js';
 import 'tachyons';
 import './index.css';
-import CONFIG from './config.js';
 
 // Add an Authorization header to each GraphQL request
 const authLink = setContext((_, { headers }) => ({
@@ -30,16 +31,45 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 });
 
-ReactDOM.render(
-	<ApolloProvider client={client}>
-		<Router>
-			<div>
-				<Route exact path="/" component={ListPage} />
-				<Route path="/post/:id" component={DetailPage} />
-				<Route path="/create" component={CreatePage} />
-			</div>
-		</Router>
-	</ApolloProvider>,
+function Login() {
+	const { actions } = useStitchAuth();
+
+	return (
+		<button onClick={actions.handleAnonymousLogin}>Log In as a Guest User</button>
+	)
+}
+
+function InstaPostApp() {
+  return (
+	<Router>
+		<div>
+			<Route exact path="/" component={ListPage} />
+			<Route path="/post/:id" component={DetailPage} />
+			<Route path="/create" component={CreatePage} />
+		</div>
+	</Router>
+  );
+}
+
+function App() {
+  const {
+    isLoggedIn,
+    actions: { handleLogout },
+  } = useStitchAuth();
+
+  return (
+	<StitchAuthProvider>
+		<ApolloProvider client={client}>
+			{isLoggedIn ? <InstaPostApp /> : <Login />}
+		</ApolloProvider>
+	</ StitchAuthProvider>
+  );
+}
+
+ReactDOM.render((
+	<StitchAuthProvider>
+		<App />
+	</ StitchAuthProvider>), 
 	document.getElementById('root')
 );
 

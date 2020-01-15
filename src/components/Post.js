@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 export default class Post extends React.Component {
 	render() {
-		console.log(this.props);
-
 		return (
 			<Link
 				className="bg-white ma3 box post flex flex-column no-underline br2"

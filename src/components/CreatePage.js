@@ -1,60 +1,79 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Modal from 'react-modal';
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import modalStyle from '../constants/modalStyle';
 
-class CreatePage extends Component {
-	state = {
-		description: '',
-		imageUrl: '',
-	};
+const ADD_INSTAPOST = gql`
+	mutation CreatePostMutation($data: InstapostInsertInput!) {
+		insertOneInstapost(data: $data) {
+			_id
+			description
+			imageUrl
+		}
+	}
+`;
 
-	handlePost = async () => {
-		const { description, imageUrl } = this.state;
-		// TODO
-		this.props.history.replace('/');
-	};
+function CreatePage(props) {
+	let imageUrl = { value: '' };
+	let description = '';
+	const [addPost, { data }] = useMutation(ADD_INSTAPOST);
 
-	render() {
-		return (
-			<Modal
-				isOpen
-				contentLabel="Create Post"
-				ariaHideApp={false}
-				style={modalStyle}
-				onRequestClose={this.props.history.goBack}
-			>
-				<div className="pa4 flex justify-center bg-white">
-					<div style={{ maxWidth: 400 }} className="">
-						{this.state.imageUrl && (
-							<img src={this.state.imageUrl} alt="" className="w-100 mv3" />
-						)}
+	return (
+		<Modal
+			isOpen
+			contentLabel="Create Post"
+			ariaHideApp={false}
+			style={modalStyle}
+			onRequestClose={props.history.goBack}
+		>
+			<div className="pa4 flex justify-center bg-white">
+				<div style={{ maxWidth: 400 }} className="">
+					<form
+						onSubmit={e => {
+							e.preventDefault();
+
+							addPost({
+								variables: {
+									data: {
+										description: description.value,
+										imageUrl: imageUrl.value,
+									},
+								},
+							});
+							props.history.replace('/');
+						}}
+					>
+						{' '}
 						<input
 							className="w-100 pa3 mv2"
-							value={this.state.imageUrl}
+							id="imageUrl"
+							ref={url => {
+								imageUrl = url;
+							}}
 							placeholder="Image Url"
-							onChange={e => this.setState({ imageUrl: e.target.value })}
 							autoFocus
 						/>
 						<input
 							className="w-100 pa3 mv2"
-							value={this.state.description}
+							id="description"
 							placeholder="Description"
-							onChange={e => this.setState({ description: e.target.value })}
+							ref={str => {
+								description = str;
+							}}
 						/>
-						{this.state.description && this.state.imageUrl && (
-							<button
-								className="pa3 bg-black-10 bn dim ttu pointer"
-								onClick={this.handlePost}
-							>
-								Post
-							</button>
-						)}
-					</div>
+						<button
+							className="pa3 bg-black-10 bn dim ttu pointer"
+							type="submit"
+						>
+							Post
+						</button>
+					</form>
 				</div>
-			</Modal>
-		);
-	}
+			</div>
+		</Modal>
+	);
 }
 
 export default withRouter(CreatePage);
