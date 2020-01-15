@@ -1,6 +1,5 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import ListPage from './ListPage';
 import Loading from './Loading';

@@ -18,7 +18,7 @@ const ADD_INSTAPOST = gql`
 function CreatePage(props) {
 	let imageUrl = { value: '' };
 	let description = '';
-	const [addPost, { data }] = useMutation(ADD_INSTAPOST);
+	const [addPost] = useMutation(ADD_INSTAPOST);
 
 	return (
 		<Modal

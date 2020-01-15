@@ -24,7 +24,7 @@ const DELETE_INSTAPOST = gql`
 `;
 
 function DetailPage(props) {
-	const [deletePost, { data }] = useMutation(DELETE_INSTAPOST);
+	const [deletePost] = useMutation(DELETE_INSTAPOST);
 	const { instapost } = props;
 
 	return (

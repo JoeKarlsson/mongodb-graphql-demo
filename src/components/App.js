@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ListPage from './ListPageContainer';
 import CreatePage from './CreatePageContainer';
 import DetailPage from './DetailPageContainer';
-import initGraphQLClient from '../stitch/graphql';
-import { useStitchAuth } from '../stitch/StitchAuth';
+import { useStitchAuth, initGraphQLClient } from '../stitch';
 
 function Login() {
 	const { actions } = useStitchAuth();
@@ -18,11 +17,6 @@ function Login() {
 }
 
 function InstaPostApp() {
-	const {
-		isLoggedIn,
-		actions: { handleAnonymousLogin },
-	} = useStitchAuth();
-
 	const client = initGraphQLClient();
 
 	return (

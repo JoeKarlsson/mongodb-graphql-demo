@@ -67,7 +67,7 @@ export function StitchAuthProvider(props) {
 			actions: { handleAnonymousLogin, handleLogout },
 		};
 		return value;
-	}, [authState.isLoggedIn]);
+	}, [authState, handleAnonymousLogin, handleLogout]);
 	return (
 		<StitchAuthContext.Provider value={authInfo}>
 			{props.children}
