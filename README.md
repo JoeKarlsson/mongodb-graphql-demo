@@ -56,34 +56,13 @@ Upon creation of your app, you will be redirected to the MongoDB Stitch console.
 
 To access data in a MongoDB collection through the GraphQL API, you must [create or generate a schema](https://docs-mongodbcom-staging.corp.mongodb.com/stitch/nick/graphql/mongodb/enforce-a-document-schema.html) for the collection. Stitch uses the collection schema to automatically generate GraphQL types and regenerates types whenever the schema changes.
 
-### 6. Get a Client API Access Token
-
-Stitch enforces collection rules for GraphQL requests, so you must include an authenticated Stitch user access token with each request. To get an access token, you need to authenticate with the Stitch Client HTTP API using the user’s login credentials.
-
-The following authentication request sends the user’s username and password to the client authentication endpoint.
-
-```sh
-curl --location --request POST 'https://stitch.mongodb.com/api/client/v2.0/app/<yourappid-abcde>/auth/providers/local-userpass/login' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
-
-    "username": "test@example.com",
-
-    "password": "password"
-
-  }'
-```
-
-If authentication was successful, the response body includes an access_token value. You’ll need to use this token in your
-GraphQL requests.
-
-### 5. Connect the frontend app with your GraphQL API
+### 6. Connect the frontend app with your GraphQL API
 
 Change `src/congig_example.js` to `src/config.js` and
 
-Paste the `ACCESS_TOKEN` you got from the previous step into the config file along with your Stitch APP_ID.
+Paste your Stitch App ID in the  `APP_ID` feild.
 
-### 6. Install dependencies & run locally
+### 7. Install dependencies & run locally
 
 ```sh
 npm install
@@ -96,7 +75,7 @@ npm start # open http://localhost:3000 in your browser
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/JoeKarlsson/iot-kitty-litter-box/blob/develop/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/JoeKarlsson/mongodb-graphql-demo/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ### Contributing TLDR;
 
