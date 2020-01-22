@@ -1,7 +1,7 @@
 # GraphQL, React & Apollo Demo
 
-- [GraphQl Slides](https://speakerdeck.com/joekarlsson/building-a-graphql-client-in-javascript): Slides that accompany this demo
-- [Access MongoDB Data with GraphQL [Docs] ](#): The Stitch GraphQL API allows client applications to access data in a linked MongoDB cluster using any standard GraphQL client.
+- [GraphQl Slides](https://speakerdeck.com/joekarlsson/getting-started-with-graphql-and-atlas-mongodb-local-sf-2020): Slides that accompany this demo
+- [MongoDB GraphQL API Docs ](https://docs.mongodb.com/stitch/graphql): The Stitch GraphQL API allows client applications to access data in a linked MongoDB cluster using any standard GraphQL client.
 - [GraphQL](https://graphql.org/): A query language for your API
 - [React](https://facebook.github.io/react/): Frontend framework for building user interfaces
 - [Apollo Client](https://github.com/apollographql/apollo-client): Fully-featured, production ready caching GraphQL client
@@ -69,9 +69,11 @@ npm install
 npm start # open http://localhost:3000 in your browser
 ```
 
-## Next steps
+## Related Links
 
-- [Documentation](#)
+- [MongoDB GraphQL API Docs ](https://docs.mongodb.com/stitch/graphql): The Stitch GraphQL API allows client applications to access data in a linked MongoDB cluster using any standard GraphQL client.
+- [$200 in FREE MongoDB Atlas Credits](https://www.joekarlsson.com/2019/12/how-to-activate-your-mongodb-atlas-credits/)
+- [All resources](https://www.joekarlsson.com/2020/01/getting-started-with-graphql-and-atlas/)
 
 ## Contributing
 
@@ -103,3 +105,10 @@ Please read [CONTRIBUTING.md](https://github.com/JoeKarlsson/mongodb-graphql-dem
 ### License
 
 #### [Apache 2.0](./LICENSE)
+
+### Follow Joe Karlsson on Social
+
+* Twitter - [@JoeKarlsson1](https://twitter.com/JoeKarlsson1)
+* GitHub - [@JoeKarlsson](https://github.com/joekarlsson/)
+* LinkedIn - [/in/joekarlsson](https://www.linkedin.com/in/joekarlsson/)
+* Website - [joekarlsson.com](https://www.joekarlsson.com/)
