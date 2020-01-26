@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import Post from './Post';
 import { useStitchAuth } from '../stitch/StitchAuth';
 
-
-const ListPage = (props) => {
+const ListPage = props => {
 	const {
 		isLoggedIn,
 		actions: { handleLogout, handleAnonymousLogin },
@@ -16,13 +15,16 @@ const ListPage = (props) => {
 		blurClass = ' blur';
 	}
 
+	console.log(props);
+
 	return (
 		<div className={'w-100 flex justify-center pa6' + blurClass}>
 			<div className="w-100 flex flex-wrap" style={{ maxWidth: 1150 }}>
-
-				
-				{ !isLoggedIn &&
-					<button className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline" onClick={handleAnonymousLogin} >
+				{!isLoggedIn && (
+					<button
+						className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline"
+						onClick={handleAnonymousLogin}
+					>
 						<img
 							src={require('../assets/plus.svg')}
 							alt=""
@@ -30,8 +32,8 @@ const ListPage = (props) => {
 						/>
 						<div>Log In as a Guest User</div>
 					</button>
-				}
-				
+				)}
+
 				<Link
 					to="/create"
 					className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline"
@@ -53,8 +55,11 @@ const ListPage = (props) => {
 						/>
 					))}
 
-				{ isLoggedIn &&
-					<button className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline" onClick={handleLogout} >
+				{isLoggedIn && (
+					<button
+						className="ma3 box new-post br2 flex flex-column items-center justify-center ttu fw6 f20 black-30 no-underline"
+						onClick={handleLogout}
+					>
 						<img
 							src={require('../assets/plus.svg')}
 							alt=""
@@ -62,7 +67,7 @@ const ListPage = (props) => {
 						/>
 						<div>Log Out</div>
 					</button>
-				}
+				)}
 			</div>
 			{props.children}
 		</div>
