@@ -15,8 +15,6 @@ const ListPage = props => {
 		blurClass = ' blur';
 	}
 
-	console.log(props);
-
 	return (
 		<div className={'w-100 flex justify-center pa6' + blurClass}>
 			<div className="w-100 flex flex-wrap" style={{ maxWidth: 1150 }}>

@@ -56,6 +56,35 @@ Upon creation of your app, you will be redirected to the MongoDB Stitch console.
 
 To access data in a MongoDB collection through the GraphQL API, you must [create or generate a schema](https://docs.mongodb.com/stitch/graphql/expose-data/) for the collection. Stitch uses the collection schema to automatically generate GraphQL types and regenerates types whenever the schema changes.
 
+For this demo, here is what a sample document look like:
+
+```
+{
+    _id: 5e2dcfda1c9d440000ca22a3, [OBJECT_ID]
+    imageUrl:"https://media.giphy.com/media/CLnmxQqmk6X16/giphy.gif", [STRING]
+    description:"Happy" [STRING]
+}
+```
+
+My GraphQL Schema looks like this:
+
+``` JSON
+{
+  "title": "Instapost",
+  "properties": {
+    "_id": {
+      "bsonType": "objectId"
+    },
+    "description": {
+      "bsonType": "string"
+    },
+    "imageUrl": {
+      "bsonType": "string"
+    }
+  }
+}
+```
+
 ### 6. Connect the frontend app with your GraphQL API
 
 Change `src/congig_example.js` to `src/config.js` and
