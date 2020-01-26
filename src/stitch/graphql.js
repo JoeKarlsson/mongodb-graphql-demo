@@ -25,7 +25,7 @@ const initGraphQLClient = () => {
 		}));
 
 		// Connect Apollo to the GraphQL Endpoint
-		const GRAPHQL_URL = `https://stitch-dev.mongodb.com/api/client/v2.0/app/${CONFIG.APP_ID}/graphql`;
+		const GRAPHQL_URL = `https://stitch.mongodb.com/api/client/v2.0/app/${CONFIG.APP_ID}/graphql`;
 		const httpLink = new HttpLink({ uri: GRAPHQL_URL });
 
 		// Instantiate the Apollo Client

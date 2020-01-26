@@ -54,13 +54,13 @@ Upon creation of your app, you will be redirected to the MongoDB Stitch console.
 
 ### 5. Expose Data in a Collection
 
-To access data in a MongoDB collection through the GraphQL API, you must [create or generate a schema](https://docs-mongodbcom-staging.corp.mongodb.com/stitch/nick/graphql/mongodb/enforce-a-document-schema.html) for the collection. Stitch uses the collection schema to automatically generate GraphQL types and regenerates types whenever the schema changes.
+To access data in a MongoDB collection through the GraphQL API, you must [create or generate a schema](https://docs.mongodb.com/stitch/graphql/expose-data/) for the collection. Stitch uses the collection schema to automatically generate GraphQL types and regenerates types whenever the schema changes.
 
 ### 6. Connect the frontend app with your GraphQL API
 
 Change `src/congig_example.js` to `src/config.js` and
 
-Paste your Stitch App ID in the  `APP_ID` feild.
+Paste your Stitch App ID in the `APP_ID` feild.
 
 ### 7. Install dependencies & run locally
 
@@ -72,7 +72,7 @@ npm start # open http://localhost:3000 in your browser
 ## Related Links
 
 - [MongoDB GraphQL API Docs ](https://docs.mongodb.com/stitch/graphql): The Stitch GraphQL API allows client applications to access data in a linked MongoDB cluster using any standard GraphQL client.
-- [$200 in FREE MongoDB Atlas Credits](https://www.joekarlsson.com/2019/12/how-to-activate-your-mongodb-atlas-credits/)
+- [\$200 in FREE MongoDB Atlas Credits](https://www.joekarlsson.com/2019/12/how-to-activate-your-mongodb-atlas-credits/)
 - [All resources](https://www.joekarlsson.com/2020/01/getting-started-with-graphql-and-atlas/)
 
 ## Contributing
@@ -108,7 +108,7 @@ Please read [CONTRIBUTING.md](https://github.com/JoeKarlsson/mongodb-graphql-dem
 
 ### Follow Joe Karlsson on Social
 
-* Twitter - [@JoeKarlsson1](https://twitter.com/JoeKarlsson1)
-* GitHub - [@JoeKarlsson](https://github.com/joekarlsson/)
-* LinkedIn - [/in/joekarlsson](https://www.linkedin.com/in/joekarlsson/)
-* Website - [joekarlsson.com](https://www.joekarlsson.com/)
+- Twitter - [@JoeKarlsson1](https://twitter.com/JoeKarlsson1)
+- GitHub - [@JoeKarlsson](https://github.com/joekarlsson/)
+- LinkedIn - [/in/joekarlsson](https://www.linkedin.com/in/joekarlsson/)
+- Website - [joekarlsson.com](https://www.joekarlsson.com/)
