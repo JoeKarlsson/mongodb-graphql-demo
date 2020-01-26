@@ -1,0 +1,40 @@
+{
+    "id": "5e2dcdb48422f4eeb0a4a2c1",
+    "database": "Instapost",
+    "collection": "Posts",
+    "roles": [
+        {
+            "name": "owner",
+            "apply_when": {
+                "owner_id": "%%user.id"
+            },
+            "read": true,
+            "write": true,
+            "insert": true,
+            "delete": true,
+            "additional_fields": {}
+        },
+        {
+            "name": "role 2",
+            "apply_when": {},
+            "write": true,
+            "insert": true,
+            "delete": true,
+            "additional_fields": {}
+        }
+    ],
+    "schema": {
+        "title": "Instapost",
+        "properties": {
+            "_id": {
+                "bsonType": "objectId"
+            },
+            "description": {
+                "bsonType": "string"
+            },
+            "imageUrl": {
+                "bsonType": "string"
+            }
+        }
+    }
+}
