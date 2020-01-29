@@ -1,5 +1,5 @@
 const CONFIG = {
-	'APP_ID ': '<STITCH APP ID>',
+	'APP_ID ': '<- PASTE YOUR STITCH APP ID HERE ->',
 };
 
 export default CONFIG;

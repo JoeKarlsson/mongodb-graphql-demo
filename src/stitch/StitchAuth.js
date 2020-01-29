@@ -1,4 +1,10 @@
-import React from 'react';
+import React, {
+	useState,
+	useContext,
+	createContext,
+	useMemo,
+	useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
 	hasLoggedInUser,
@@ -9,11 +15,11 @@ import {
 
 // Create a React Context that lets us expose and access auth state
 // without passing props through many levels of the component tree
-const StitchAuthContext = React.createContext();
+const StitchAuthContext = createContext();
 
 // Create a React Hook that lets us get data from our auth context
 export function useStitchAuth() {
-	const context = React.useContext(StitchAuthContext);
+	const context = useContext(StitchAuthContext);
 	if (!context) {
 		throw new Error(`useStitchAuth must be used within a StitchAuthProvider`);
 	}
@@ -23,13 +29,13 @@ export function useStitchAuth() {
 // Create a component that controls auth state and exposes it via
 // the React Context we created.
 export function StitchAuthProvider(props) {
-	const [authState, setAuthState] = React.useState({
+	const [authState, setAuthState] = useState({
 		isLoggedIn: hasLoggedInUser(),
 		currentUser: getCurrentUser(),
 	});
 
 	// Authentication Actions
-	const handleAnonymousLogin = async () => {
+	const handleAnonymousLogin = useCallback(async () => {
 		const { isLoggedIn } = authState;
 		if (!isLoggedIn) {
 			try {
@@ -43,8 +49,9 @@ export function StitchAuthProvider(props) {
 				console.error(err);
 			}
 		}
-	};
-	const handleLogout = async () => {
+	}, [authState]);
+
+	const handleLogout = useCallback(async () => {
 		const { isLoggedIn } = authState;
 		if (isLoggedIn) {
 			await logoutCurrentUser();
@@ -56,10 +63,10 @@ export function StitchAuthProvider(props) {
 		} else {
 			console.log(`can't handleLogout when no user is logged in`);
 		}
-	};
+	}, [authState]);
 
 	// We useMemo to improve performance by eliminating some re-renders
-	const authInfo = React.useMemo(() => {
+	const authInfo = useMemo(() => {
 		const { isLoggedIn, currentUser } = authState;
 		const value = {
 			isLoggedIn,
@@ -68,6 +75,7 @@ export function StitchAuthProvider(props) {
 		};
 		return value;
 	}, [authState, handleAnonymousLogin, handleLogout]);
+
 	return (
 		<StitchAuthContext.Provider value={authInfo}>
 			{props.children}

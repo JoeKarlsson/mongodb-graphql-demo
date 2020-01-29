@@ -1,20 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ListPage from './ListPageContainer';
 import CreatePage from './CreatePageContainer';
 import DetailPage from './DetailPageContainer';
+import Loading from './Loading';
 import { useStitchAuth, initGraphQLClient } from '../stitch';
-
-function Login() {
-	const { actions } = useStitchAuth();
-
-	return (
-		<button onClick={actions.handleAnonymousLogin}>
-			Log In as a Guest User
-		</button>
-	);
-}
 
 function InstaPostApp() {
 	const client = initGraphQLClient();
@@ -38,9 +29,14 @@ function App() {
 		actions: { handleAnonymousLogin },
 	} = useStitchAuth();
 
-	handleAnonymousLogin();
+	const [isLoading, setLoadingState] = useState(false);
 
-	return <Fragment>{isLoggedIn ? <InstaPostApp /> : <Login />}</Fragment>;
+	if (!isLoggedIn) {
+		setLoadingState(true);
+		handleAnonymousLogin();
+	}
+
+	return <Fragment>{isLoading ? <Loading /> : <InstaPostApp />}</Fragment>;
 }
 
 export default App;
