@@ -27,7 +27,7 @@ const ListPage = props => {
 				{props.instaposts &&
 					props.instaposts.map(post => (
 						<Post
-							key={post.id}
+							key={post._id}
 							post={post}
 							refresh={() => props.instaposts.refetch()}
 						/>

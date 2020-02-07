@@ -5,21 +5,18 @@ import DetailPage from './DetailPage';
 import Loading from './Loading';
 
 function DetailPageContainer(props) {
-	const _id = props.match.params._id;
+	const id = props.match.params.id;
 
 	const { loading, error, data } = useQuery(
 		gql`
-			query PostsQuery {
-				instapost {
+			{
+				instapost(query: { _id: "${id}" }) {
 					_id
-					imageUrl
 					description
+					imageUrl
 				}
 			}
-		`,
-		{
-			variables: { _id },
-		}
+		`
 	);
 
 	return (
