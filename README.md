@@ -14,7 +14,7 @@
 
 Before you begin, you will need a MongoDB Atlas account. You can learn more about creating an Atlas account in the [Atlas Getting Started](https://docs.atlas.mongodb.com/getting-started/) documentation.
 
-Sign up [here](https://cloud.mongodb.com) and apply code JOEKATLAS200 on the billing page. For help: check out my post on redeemin your FREE Atlas credits:
+Sign up [here](http://bit.ly/37nmcLk) and apply code JOEKATLAS200 on the billing page. For help: check out my post on redeemin your FREE Atlas credits:
 
 [How To Activate Your MongoDB Atlas Credits](https://www.joekarlsson.com/2019/12/how-to-activate-your-mongodb-atlas-credits/)
 
@@ -29,7 +29,7 @@ cd mongodb-graphql-demo
 
 ### 2. Log on to Atlas
 
-To use MongoDB Stitch, you must be logged into [Atlas](https://cloud.mongodb.com).
+To use MongoDB Stitch, you must be logged into [Atlas](http://bit.ly/37nmcLk).
 
 ### 3. Create an Atlas Cluster
 
